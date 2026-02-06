@@ -1,7 +1,10 @@
 /**
  * Cloudflare Worker for Linefulness
  * Handles edge caching, API routes, and redirects
+ * Database: D1 (d6604869-55c5-4509-b0a6-362241f8dd68)
  */
+
+import { handleApiRequest } from '../src/lib/api';
 
 export default {
   async fetch(request, env, ctx) {
@@ -43,66 +46,6 @@ export default {
     return modifiedResponse;
   }
 };
-
-/**
- * Handle API requests
- */
-async function handleApiRequest(request, env) {
-  const url = new URL(request.url);
-  
-  // CORS headers
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
-  
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
-  }
-  
-  // Health check endpoint
-  if (url.pathname === '/api/health') {
-    return new Response(
-      JSON.stringify({ 
-        status: 'ok', 
-        timestamp: new Date().toISOString(),
-        version: '1.0.0'
-      }),
-      { 
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json' 
-        } 
-      }
-    );
-  }
-  
-  // Validate Zazzle configuration
-  if (url.pathname === '/api/config/validate') {
-    const config = {
-      hasAssociateId: !!env.ZAZZLE_ASSOCIATE_ID,
-      hasMemberId: !!env.ZAZZLE_MEMBER_ID,
-      hasStoreId: !!env.ZAZZLE_STORE_ID,
-      hasCategoryId: !!env.ZAZZLE_CATEGORY_ID,
-    };
-    
-    return new Response(
-      JSON.stringify({ 
-        valid: Object.values(config).every(Boolean),
-        config: config
-      }),
-      { 
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json' 
-        } 
-      }
-    );
-  }
-  
-  return new Response('Not Found', { status: 404, headers: corsHeaders });
-}
 
 /**
  * Handle Zazzle webhooks
