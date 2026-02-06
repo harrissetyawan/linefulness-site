@@ -1,0 +1,209 @@
+---
+import navigationData from "../../data/navigation.json";
+
+const { logo, mainMenu, ctaButton, settings } = navigationData;
+const { sticky, showLogo, showCta, transparentOnTop } = settings;
+
+// Get current path for active state
+const currentPath = Astro.url.pathname;
+---
+
+<nav 
+  class:list={[
+    "w-full z-50 border-b border-base-200",
+    sticky && "sticky top-0",
+    transparentOnTop ? "bg-transparent" : "bg-white/95 backdrop-blur-sm"
+  ]}
+  data-navigation
+>
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
+    <div class="flex items-center justify-between h-16">
+      {/* Logo */}
+      {showLogo && (
+        <a 
+          href={logo.href} 
+          class="flex items-center gap-2 text-base-900 hover:text-orange-600 transition-colors duration-300"
+        >
+          <span class="text-xl font-bold tracking-tight">{logo.text}</span>
+        </a>
+      )}
+
+      {/* Desktop Navigation */}
+      <div class="hidden md:flex items-center gap-1">
+        {mainMenu.map((item) => (
+          <div class="relative group">
+            <a
+              href={item.href}
+              class:list={[
+                "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center gap-1",
+                currentPath === item.href 
+                  ? "text-orange-600 bg-orange-50" 
+                  : "text-base-600 hover:text-base-900 hover:bg-base-100"
+              ]}
+            >
+              {item.label}
+              {item.children && (
+                <svg 
+                  class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              )}
+            </a>
+
+            {/* Dropdown Menu */}
+            {item.children && (
+              <div class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[200px]">
+                <div class="bg-white rounded-xl shadow-lg border border-base-200 py-2 overflow-hidden">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class="block px-4 py-3 text-sm text-base-600 hover:text-base-900 hover:bg-orange-50 transition-colors duration-200"
+                    >
+                      <span class="font-medium block">{child.label}</span>
+                      {child.description && (
+                        <span class="text-xs text-base-400 block mt-0.5">{child.description}</span>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* CTA Button */}
+      {showCta && (
+        <div class="hidden md:block">
+          <a
+            href={ctaButton.href}
+            class="px-5 font-medium h-9 text-sm bg-orange-500 text-white rounded-full flex items-center justify-center hover:bg-orange-600 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-orange-500/20"
+          >
+            {ctaButton.label}
+          </a>
+        </div>
+      )}
+
+      {/* Mobile Menu Button */}
+      <button
+        type="button"
+        class="md:hidden p-2 rounded-lg text-base-600 hover:text-base-900 hover:bg-base-100 transition-colors duration-200"
+        aria-label="Toggle menu"
+        data-mobile-toggle
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-menu-icon>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-close-icon>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    {/* Mobile Menu */}
+    <div 
+      class="md:hidden hidden border-t border-base-200 py-4" 
+      data-mobile-menu
+    >
+      <div class="flex flex-col gap-1">
+        {mainMenu.map((item) => (
+          <div>
+            <a
+              href={item.href}
+              class:list={[
+                "px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200 flex items-center justify-between",
+                currentPath === item.href 
+                  ? "text-orange-600 bg-orange-50" 
+                  : "text-base-600 hover:text-base-900 hover:bg-base-100"
+              ]}
+            >
+              {item.label}
+              {item.children && (
+                <svg 
+                  class="w-4 h-4 transition-transform duration-200" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  data-mobile-dropdown-icon
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              )}
+            </a>
+
+            {/* Mobile Dropdown */}
+            {item.children && (
+              <div class="hidden pl-4 mt-1" data-mobile-submenu>
+                {item.children.map((child) => (
+                  <a
+                    href={child.href}
+                    class="block px-4 py-2.5 text-sm text-base-500 hover:text-base-900 hover:bg-orange-50 rounded-lg transition-colors duration-200"
+                  >
+                    <span class="font-medium">{child.label}</span>
+                    {child.description && (
+                      <span class="text-xs text-base-400 block mt-0.5">{child.description}</span>
+                    )}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+        
+        {showCta && (
+          <div class="pt-3 mt-2 border-t border-base-200">
+            <a
+              href={ctaButton.href}
+              class="mx-4 px-5 font-medium h-10 text-sm bg-orange-500 text-white rounded-full flex items-center justify-center hover:bg-orange-600 transition-all duration-300"
+            >
+              {ctaButton.label}
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  const mobileToggle = document.querySelector('[data-mobile-toggle]');
+  const mobileMenu = document.querySelector('[data-mobile-menu]');
+  const menuIcon = document.querySelector('[data-menu-icon]');
+  const closeIcon = document.querySelector('[data-close-icon]');
+
+  if (mobileToggle && mobileMenu) {
+    mobileToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      menuIcon?.classList.toggle('hidden');
+      closeIcon?.classList.toggle('hidden');
+    });
+  }
+
+  // Mobile dropdown toggles
+  const mobileDropdownIcons = document.querySelectorAll('[data-mobile-dropdown-icon]');
+  mobileDropdownIcons.forEach(icon => {
+    icon.addEventListener('click', (e) => {
+      e.preventDefault();
+      const submenu = icon.closest('div')?.querySelector('[data-mobile-submenu]');
+      if (submenu) {
+        submenu.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180');
+      }
+    });
+  });
+
+  // Close mobile menu on link click
+  const mobileLinks = mobileMenu?.querySelectorAll('a');
+  mobileLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    });
+  });
+</script>

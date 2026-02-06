@@ -1,0 +1,49 @@
+# Cloudflare Workers configuration for Linefulness
+# Reference: https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "linefulness"
+main = "workers/index.js"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "./dist"
+
+# Environment variables (use `wrangler secret` for sensitive values)
+[vars]
+NODE_ENV = "production"
+SITE_URL = "https://linefulness.com"
+
+# Route configuration
+[[routes]]
+pattern = "linefulness.com/*"
+custom_domain = true
+
+[[routes]]
+pattern = "www.linefulness.com/*"
+custom_domain = true
+
+# Cache API configuration
+[cache]
+# Enable caching for Zazzle RealView images
+cache_everything = true
+
+# KV Namespace for caching location data (optional)
+# [[kv_namespaces]]
+# binding = "LOCATIONS_CACHE"
+# id = "your-kv-namespace-id"
+
+# Durable Objects (if needed for session management)
+# [[durable_objects.bindings]]
+# name = "SESSIONS"
+# class_name = "Session"
+
+# Environment-specific configuration
+[env.staging]
+name = "linefulness-staging"
+[env.staging.vars]
+NODE_ENV = "staging"
+SITE_URL = "https://staging.linefulness.com"
+
+[env.production]
+name = "linefulness"
+[env.production.vars]
+NODE_ENV = "production"
+SITE_URL = "https://linefulness.com"

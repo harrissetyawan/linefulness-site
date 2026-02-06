@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import nichesData from "../data/niches.json";
+
+const { niches } = nichesData;
+
+const title = "Linefulness — Custom Merchandise for Every Passion";
+const description = "Create personalized merchandise for any niche. From lakes to beaches, cities to mountains - design custom mugs, apparel, and accessories featuring your favorite places.";
+---
+
+<BaseLayout title={title} description={description} canonical="/">
+  <div class="max-w-2xl mx-auto text-center py-24">
+    <h1 class="text-base-800 font-medium md:text-4xl text-3xl">
+      Custom Merchandise for Every Passion
+    </h1>
+    <p class="mt-4 text-base-500 text-balance text-sm max-w-lg mx-auto">
+      Create personalized products featuring your favorite places. 
+      From lakes to beaches, cities to beyond — design custom merchandise for any niche.
+    </p>
+    <div class="flex justify-center flex-wrap gap-3 mt-6">
+      <a
+        class="px-6 font-medium h-10 text-sm bg-orange-500 text-white rounded-full flex items-center justify-center hover:bg-orange-600 duration-300 w-fit"
+        href="#niches"
+      >
+        Explore Niches
+      </a>
+    </div>
+  </div>
+
+  <!-- Niches Grid -->
+  <section id="niches" class="py-16 border-t border-base-200">
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-base-900">Explore Our Collections</h2>
+      <p class="text-sm text-base-500 mt-1">Choose a niche to browse personalized merchandise</p>
+    </div>
+    
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {niches.map((niche) => (
+        <a 
+          href={`/${niche.slug}`}
+          class="group block"
+        >
+          <div class="relative overflow-hidden rounded-2xl shadow p-8 text-center hover:shadow-lg transition-all duration-300 border border-base-200 hover:border-orange-200">
+            <span class="text-6xl mb-4 block">{niche.icon}</span>
+            <h3 class="text-xl font-bold text-base-900 group-hover:text-orange-600 transition-colors">
+              {niche.name}
+            </h3>
+            <p class="text-sm text-base-500 mt-2">
+              {niche.locations.length} destinations
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2 justify-center">
+              {niche.templates.slice(0, 3).map((template) => (
+                <span class="text-xs px-2 py-1 bg-base-100 text-base-600 rounded-full">
+                  {template.type}
+                </span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-16 border-t border-base-200">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl font-bold text-base-900">How It Works</h2>
+      <p class="text-sm text-base-500 mt-1">Create custom merchandise in 3 easy steps</p>
+    </div>
+    
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">🏷️</span>
+        </div>
+        <h3 class="font-semibold text-base-900">1. Choose Your Niche</h3>
+        <p class="text-sm text-base-500 mt-2">Select from lakes, beaches, cities, or create your own</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">✏️</span>
+        </div>
+        <h3 class="font-semibold text-base-900">2. Personalize</h3>
+        <p class="text-sm text-base-500 mt-2">Add your favorite destination name to any product</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">🚚</span>
+        </div>
+        <h3 class="font-semibold text-base-900">3. We Ship It</h3>
+        <p class="text-sm text-base-500 mt-2">Professional print-on-demand delivered to your door</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

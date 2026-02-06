@@ -1,0 +1,136 @@
+{
+  "documentation": {
+    "title": "Zazzle Create-A-Product API Guide v3",
+    "overview": "Unlock and monetize content by adding images/text to Zazzle products via URL linkovers.",
+    "implementation_modes": {
+      "one_to_one": "Generate a single product with one link (Template Link).",
+      "one_to_many": "Generate multiple products with one link (Templates Buffet)."
+    },
+    "workflow_steps": [
+      {
+        "step": 1,
+        "action": "Project Config see at project_config.json"
+      },
+      {
+        "step": 2,
+        "action": "Store Creation"
+      },
+      {
+        "step": 3,
+        "action": "Store Categorization",
+        "condition": "Required for '1 to Many' implementation.",
+        "note": "Cannot use default 'New Products' category; create specific category (e.g., 'My Templates')."
+      },
+      {
+        "step": 4,
+        "action": "Template Creation",
+        "process": [
+          "Add image/text placeholder to product.",
+          "Toggle 'Make this a template object'.",
+          "Configure Object Properties: Product Page Label, URL Parameter Name, Inner fit/fill (images), Allow editing.",
+          "Set Store Category (must match Step 3 for 1-to-Many).",
+          "Select 'Yes' for 'Make product a template'."
+        ]
+      },
+      {
+        "step": 5,
+        "action": "Link Creation",
+        "methods": [
+          "Link Building Tool (Automatic).",
+          "Manual Construction (Parameter/Value pairs)."
+        ]
+      },
+      {
+        "step": 6,
+        "action": "Integration",
+        "detail": "Place links in website or app."
+      }
+    ],
+    "api_specifications": {
+      "base_url_structure": "https://www.zazzle.com/api/create/at-{member_id}",
+      "encoding_requirement": "All dynamic image URLs and text values must be URL Encoded.",
+      "parameters": {
+        "required_common": {
+          "at": "Member Account ID (18 digit)",
+          "ax": "Request Type ('Linkover' or 'DesignBlast')"
+        },
+        "required_specific": {
+          "pd": "Product ID (for 1-to-1 / ax=Linkover)",
+          "sr": "Store ID (for 1-to-Many / ax=DesignBlast)",
+          "cg": "Category ID (for 1-to-Many / ax=DesignBlast)"
+        },
+        "template_objects": {
+          "t_{name}_iid": "Image URL for template object (Create-A-Product)",
+          "t_{name}_txt": "Text value",
+          "t_{name}_txtclr": "Text color (6 digit hex)"
+        },
+        "optional": {
+          "rf": "Associate ID",
+          "ed": "Allow customization (true/false)",
+          "tc": "Tracking Code (Referral history)",
+          "ic": "Image Code (Royalty tracking)",
+          "continueUrl": "Go Back link URL (1-to-Many only)"
+        }
+      }
+    },
+    "realview_api": {
+      "purpose": "Generate dynamic product preview images.",
+      "base_url": "https://rlv.zazzle.com/svc/view",
+      "key_differences": {
+        "image_param": "Uses 't_{name}_url' instead of 't_{name}_iid'.",
+        "max_dim": "Output size in pixels (10-2212); >699 includes Zazzle branding."
+      },
+      "required_params": [
+        "pid",
+        "max_dim",
+        "at",
+        "t_{name}_url",
+        "t_{name}_txt"
+      ]
+    },
+    "troubleshooting": [
+      {
+        "issue": "Image failed to upload",
+        "fixes": ["Declare domain of image server.", "Ensure URL encoding."]
+      },
+      {
+        "issue": "RealView image not changing",
+        "fix": "Check parameter name is 't_{name}_url', NOT 't_{name}_iid'."
+      },
+      {
+        "issue": "Templates Buffet empty",
+        "fixes": [
+          "Wait 24 hours for new category population.",
+          "Ensure category is not default 'New Products'."
+        ]
+      },
+      {
+        "issue": "Continue URL fails",
+        "fix": "Parameter is case specific: 'continueUrl'."
+      }
+    ],
+    "best_practices": {
+      "editing": "Templates cannot be edited after posting; create new product and delete old.",
+      "naming": "Use consistent URL Parameter Names across templates for 1-to-Many (e.g., 'logo' for all).",
+      "visibility": "Templates must be 'Public' and 'G-Rated' for Templates Buffet.",
+      "images": "Match placeholder aspect ratio to source images."
+    },
+    "critical_constraints": {
+      "default_naming_convention": {
+        "rule": "If the user does not manually rename the object in the Zazzle Template editor, the API defaults to incrementing integers.",
+        "image_default": "t_image1_iid, t_image2_iid, etc.",
+        "text_default": "t_text1_txt, t_text2_txt, etc.",
+        "implication": "The AI Agent must confirm the exact parameter name used in the specific Zazzle Template before generating bulk URLs."
+      },
+      "image_behavior": {
+        "fit_mode": "Image acts as bounding box. No cropping. Safest for irregular logos.",
+        "fill_mode": "Image fills the box. Cropping occurs if aspect ratio differs. Best for full-bleed background textures or photos.",
+        "source_requirement": "All image URLs (t_image1_iid) must be hosted on a domain explicitly declared in the Zazzle Associate Settings."
+      },
+      "url_structure_nuance": {
+        "parameter_case_sensitivity": "Strict. 'continueUrl' is valid, 'continueurl' will fail.",
+        "realview_vs_linkover_param": "CRITICAL: RealView uses 't_image1_url'. Product Linkover uses 't_image1_iid'. Do not mix them."
+      }
+    }
+  }
+}

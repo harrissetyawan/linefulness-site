@@ -1,0 +1,292 @@
+---
+import type { Location } from "../../lib/zazzle";
+
+interface TemplatePreview {
+  type: string;
+  product_id_pd: string;
+  parameter_mapping: {
+    text_variable: string;
+    image_variable: string;
+  };
+  previewUrl: string;
+  productUrl: string;
+}
+
+interface Props {
+  location: Location;
+  zazzleUrl: string;
+  templatePreviews: TemplatePreview[];
+}
+
+const { location, zazzleUrl, templatePreviews } = Astro.props;
+
+const features = [
+  "Personalized with your location name",
+  "High-quality print-on-demand products",
+  "Customize colors and designs on Zazzle",
+  "Perfect gift for camping enthusiasts",
+  "Multiple product types available",
+  "Ships directly from Zazzle",
+];
+
+// All templates (will be reordered by client-side JS based on query param)
+const allTemplates = templatePreviews;
+---
+
+<section class="py-12 lg:py-24" data-product-detail data-templates={JSON.stringify(allTemplates)} data-location-name={location.name}>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+    <!-- Product Preview Grid -->
+    <div class="relative">
+      <!-- Primary large preview -->
+      <div class="relative mb-6" id="primary-preview-container">
+        <div class="aspect-square rounded-3xl overflow-hidden shadow-lg bg-base-100">
+          <img
+            id="primary-preview-image"
+            src={allTemplates[0]?.previewUrl}
+            alt={`${location.name} ${allTemplates[0]?.type}`}
+            class="w-full h-full object-cover object-center transition-opacity duration-300"
+            loading="eager"
+            decoding="async"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22%3E%3Crect fill=%22%23f3f4f6%22 width=%22400%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 font-family=%22sans-serif%22 font-size=%2220%22 dy=%2210.5%22 text-anchor=%22middle%22 x=%22200%22 y=%22200%22%3EImage loading...%3C/text%3E%3C/svg%3E'"
+          />
+        </div>
+        <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+          <span class="text-sm font-semibold text-base-900" id="primary-type">{allTemplates[0]?.type}</span>
+        </div>
+        <div class="absolute bottom-4 right-4 bg-orange-500 text-white px-4 py-2 rounded-full shadow-sm">
+          <span class="text-sm font-semibold">Featured</span>
+        </div>
+      </div>
+      
+      <!-- Secondary templates grid -->
+      <div class="grid grid-cols-2 gap-4" id="secondary-templates">
+        {allTemplates.slice(1).map((template, index) => (
+          <a 
+            href={template.productUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group relative aspect-square rounded-2xl overflow-hidden shadow bg-base-100 hover:shadow-md transition-shadow secondary-template-item"
+            data-type={template.type}
+            data-preview-url={template.previewUrl}
+            data-product-url={template.productUrl}
+          >
+            <img
+              src={template.previewUrl}
+              alt={`${location.name} ${template.type}`}
+              class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+              fetchpriority={index < 2 ? "high" : "auto"}
+              onerror="this.style.display='none'"
+            />
+            <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+              <span class="text-xs font-medium text-base-900">{template.type}</span>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="flex flex-col justify-center">
+      <div class="inline-flex items-center gap-2 w-fit">
+        <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full">
+          {location.type}
+        </span>
+        <span class="text-sm text-base-500">Collection</span>
+      </div>
+      
+      <h1 class="mt-4 text-4xl md:text-5xl font-bold text-base-900 tracking-tight">
+        {location.name}
+      </h1>
+      
+      <p class="mt-2 text-xl font-medium text-orange-600">
+        Customizable Products
+      </p>
+      
+      <div class="mt-6 prose prose-base text-base-600 max-w-none">
+        <p class="text-lg leading-relaxed">
+          Show your love for <strong>{location.name}</strong> with our custom merchandise collection. 
+          Each product features your location name and can be personalized with colors, 
+          designs, and more. Perfect for campers, hikers, and nature lovers who cherish 
+          their time at {location.name}.
+        </p>
+      </div>
+
+      <!-- Available Products -->
+      <div class="mt-8">
+        <h2 class="text-sm font-semibold text-base-900 uppercase tracking-wider mb-4">
+          Available Products
+        </h2>
+        <div class="flex flex-wrap gap-2">
+          {templatePreviews.map((template) => (
+            <a
+              href={template.productUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-4 py-2 bg-base-100 hover:bg-orange-50 text-base-700 hover:text-orange-700 rounded-xl text-sm font-medium transition-colors border border-base-200 hover:border-orange-200"
+            >
+              {template.type}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="mt-8">
+        <h2 class="text-sm font-semibold text-base-900 uppercase tracking-wider mb-4">
+          Features
+        </h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {features.map((feature) => (
+            <li class="flex items-start gap-3 text-sm text-base-600">
+              <svg
+                class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a
+          href={zazzleUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-8 font-semibold h-14 text-base bg-orange-500 text-white rounded-full flex items-center justify-center hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300 w-fit"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          Buy
+        </a>
+        <a
+          href="/#all-locations"
+          class="px-8 font-semibold h-14 text-base bg-base-100 text-base-900 rounded-full flex items-center justify-center hover:bg-base-200 transition-colors duration-300 w-fit"
+        >
+          Browse All Lakes
+        </a>
+      </div>
+      
+      <!-- Trust indicators -->
+      <div class="mt-6 flex items-center gap-4 text-xs text-base-500">
+        <span class="flex items-center gap-1">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          Secure checkout via Zazzle
+        </span>
+        <span class="flex items-center gap-1">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          100% customizable
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Handle image loading errors gracefully
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          
+          img.onerror = () => {
+            // Hide failed images
+            img.style.display = 'none';
+          };
+          
+          observer.unobserve(img);
+        }
+      });
+    }, {
+      rootMargin: '50px 0px',
+      threshold: 0.01
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+  });
+
+  // Handle template reordering based on query parameter
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('[data-product-detail]');
+    if (!section) return;
+
+    const templatesData = JSON.parse(section.dataset.templates || '[]');
+    const locationName = section.dataset.locationName || '';
+    
+    // Get template type from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedTemplate = urlParams.get('template');
+    
+    if (!requestedTemplate || templatesData.length === 0) return;
+
+    // Find the requested template
+    const primaryIndex = templatesData.findIndex(
+      t => t.type.toLowerCase() === requestedTemplate.toLowerCase()
+    );
+    
+    if (primaryIndex < 0) return; // Template not found
+
+    const primaryTemplate = templatesData[primaryIndex];
+    const secondaryTemplates = templatesData.filter((_, i) => i !== primaryIndex);
+
+    // Update primary preview
+    const primaryImage = document.getElementById('primary-preview-image');
+    const primaryType = document.getElementById('primary-type');
+    
+    if (primaryImage) {
+      primaryImage.src = primaryTemplate.previewUrl;
+      primaryImage.alt = `${locationName} ${primaryTemplate.type}`;
+    }
+    if (primaryType) {
+      primaryType.textContent = primaryTemplate.type;
+    }
+
+    // Rebuild secondary templates grid
+    const secondaryContainer = document.getElementById('secondary-templates');
+    if (secondaryContainer) {
+      secondaryContainer.innerHTML = secondaryTemplates.map((template, index) => `
+        <a 
+          href="${template.productUrl}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative aspect-square rounded-2xl overflow-hidden shadow bg-base-100 hover:shadow-md transition-shadow"
+        >
+          <img
+            src="${template.previewUrl}"
+            alt="${locationName} ${template.type}"
+            class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+            ${index < 2 ? 'fetchpriority="high"' : ''}
+            onerror="this.style.display='none'"
+          />
+          <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+            <span class="text-xs font-medium text-base-900">${template.type}</span>
+          </div>
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+        </a>
+      `).join('');
+    }
+  });
+</script>

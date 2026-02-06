@@ -1,0 +1,29 @@
+{
+  "name": "Linefulness - Custom Lake Merchandise",
+  "short_name": "Linefulness",
+  "description": "Personalized mugs, sweatshirts, and hats featuring your favorite lakes. Perfect gifts for campers, hikers, and nature lovers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle", "travel"],
+  "screenshots": [
+    {
+      "src": "/og-image.svg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ]
+}

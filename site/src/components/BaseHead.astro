@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { 
+  title = "Linefulness — Custom Lake Merchandise & Gifts",
+  description = "Discover personalized mugs, sweatshirts, and hats featuring your favorite lakes. Perfect gifts for campers, hikers, and nature lovers.",
+  image = "https://linefulness.com/og-image.svg",
+  canonical = "https://linefulness.com/"
+} = Astro.props;
+
+const siteUrl = "https://linefulness.com";
+const fullCanonical = canonical.startsWith('http') ? canonical : `${siteUrl}${canonical}`;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Basic Meta Tags -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content="lake merchandise, camping gifts, personalized mugs, custom sweatshirts, lake gifts, camping apparel, nature gifts" />
+<meta name="author" content="Linefulness" />
+
+<!-- Favicons - SVG for modern browsers, fallback to emoji-based -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
+
+<!-- Apple Touch Icon - using SVG as base64 data URI -->
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23f97316'/%3E%3Ctext x='90' y='125' font-size='100' text-anchor='middle'%3E🏕️%3C/text%3E%3C/svg%3E" />
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.webmanifest" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={fullCanonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={fullCanonical} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={image} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={fullCanonical} />
+
+<!-- Additional SEO -->
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+
+<!-- Theme Color for Mobile Browsers -->
+<meta name="theme-color" content="#f97316" />
+
+<!-- For IE -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- Preconnect to external domains -->
+<link rel="preconnect" href="https://rsms.me/" />
+<link rel="preconnect" href="https://rlv.zazzle.com/" crossorigin />
+
+<!-- Inter Font -->
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />

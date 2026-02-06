@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NicheProductDetail from "../../components/niche/NicheProductDetail.astro";
+import nichesData from "../../data/niches.json";
+import { generateLinkoverUrl, generateProductLinkoverUrl, generateRealViewUrl, generateMetaDescription, generatePageTitle } from "../../lib/zazzle";
+
+export function getStaticPaths() {
+  const paths: any[] = [];
+  
+  nichesData.niches.forEach(niche => {
+    niche.locations.forEach(location => {
+      paths.push({
+        params: { niche: niche.slug, slug: location.slug },
+        props: { niche, location },
+      });
+    });
+  });
+  
+  return paths;
+}
+
+const { niche, location } = Astro.props;
+
+// Generate preview URLs for each template in this niche
+const templatePreviews = niche.templates.map((template: any) => ({
+  ...template,
+  previewUrl: generateRealViewUrl(template, location),
+  productUrl: generateProductLinkoverUrl(template, location, `${Astro.site?.toString() || ''}/${niche.slug}/${location.slug}`)
+}));
+
+// SEO metadata
+const title = generatePageTitle(location);
+const description = generateMetaDescription(location);
+---
+
+<BaseLayout title={title} description={description}>
+  <NicheProductDetail
+    niche={niche}
+    location={location}
+    templatePreviews={templatePreviews}
+  />
+</BaseLayout>

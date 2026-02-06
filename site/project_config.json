@@ -1,0 +1,120 @@
+{
+  "zazzle_credentials": {
+    "associate_id_rf": "238975517577791237",
+    "member_id_at": "238975517577791237",
+    "store_id_sr": "linefulness",
+    "category_id_cg": "196167236993318158"
+  },
+  "template_inventory": [
+    {
+      "type": "Mug Lake",
+      "product_id_pd": "256657138688428297",
+      "parameter_mapping": {
+        "text_variable": "t_text1_txt",
+        "image_variable": "t_image1_iid"
+      },
+      "constraints": {
+        "max_text_length": 25,
+        "image_aspect_ratio": "1:1"
+      },
+      "realview_params": {
+        "max_dim": 600,
+        "text_color": "000000"
+      }
+    },
+    {
+      "type": "Sweatshirt",
+      "product_id_pd": "256687649014042354",
+      "parameter_mapping": {
+        "text_variable": "t_text1_txt",
+        "image_variable": "t_image1_iid"
+      },
+      "constraints": {
+        "max_text_length": 30,
+        "image_aspect_ratio": "1:1"
+      },
+      "realview_params": {
+        "max_dim": 600,
+        "text_color": "000000"
+      }
+    },
+    {
+      "type": "Men T-shirt",
+      "product_id_pd": "256097094563764934",
+      "parameter_mapping": {
+        "text_variable": "t_text1_txt",
+        "image_variable": "t_image1_iid"
+      },
+      "constraints": {
+        "max_text_length": 30,
+        "image_aspect_ratio": "1:1"
+      },
+      "realview_params": {
+        "max_dim": 600,
+        "text_color": "000000"
+      }
+    },
+    {
+      "type": "Hat",
+      "product_id_pd": "256009887799526931",
+      "parameter_mapping": {
+        "text_variable": "t_text1_txt",
+        "image_variable": "t_image1_iid"
+      },
+      "constraints": {
+        "max_text_length": 20,
+        "image_aspect_ratio": "1:1"
+      },
+      "realview_params": {
+        "max_dim": 600,
+        "text_color": "000000"
+      }
+    }
+  ],
+  "domain_settings": {
+    "declared_image_host": "https://images.linefulness.com",
+    "production_url": "https://linefulness.com",
+    "staging_url": "https://staging.linefulness.com",
+    "allowed_domains": [
+      "linefulness.com",
+      "www.linefulness.com",
+      "images.linefulness.com"
+    ]
+  },
+  "api_settings": {
+    "realview_base_url": "https://rlv.zazzle.com/svc/view",
+    "linkover_base_url": "https://www.zazzle.com/api/create",
+    "cache_duration": 86400,
+    "timeout_ms": 10000
+  },
+  "seo_settings": {
+    "site_name": "Linefulness",
+    "default_title": "Custom Lake Merchandise & Gifts for Campers",
+    "default_description": "Discover personalized mugs, sweatshirts, and hats featuring your favorite lakes. Perfect gifts for campers, hikers, and nature lovers.",
+    "keywords": [
+      "lake merchandise",
+      "camping gifts",
+      "personalized mugs",
+      "custom sweatshirts",
+      "lake gifts",
+      "camping apparel"
+    ],
+    "pages_per_sitemap": 5000
+  },
+  "performance_settings": {
+    "lazy_load_images": true,
+    "preload_critical_images": 6,
+    "image_quality": 85,
+    "enable_caching": true
+  },
+  "deployment": {
+    "target": "cloudflare_pages",
+    "build_output_dir": "dist",
+    "worker_routes": [
+      {
+        "pattern": "api/*",
+        "script": "api-worker"
+      }
+    ]
+  }
+}

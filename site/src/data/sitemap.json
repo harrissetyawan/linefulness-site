@@ -1,0 +1,11 @@
+{
+  "siteUrl": "https://linefulness.com",
+  "changefreq": "daily",
+  "priority": {
+    "home": 1.0,
+    "niche": 0.9,
+    "product": 0.8
+  },
+  "lastmod": true,
+  "exclude": []
+}

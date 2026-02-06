@@ -1,0 +1,140 @@
+{
+  "document_meta": {
+    "title": "Software Requirements Specification (SRS) for Linefulness.com",
+    "version": "1.0.0",
+    "last_updated": "2024-05-21",
+    "status": "Approved for Development",
+    "author": "Brainstormer AI"
+  },
+  "1_introduction": {
+    "1.1_purpose": "To define the functional and non-functional requirements for the Linefulness Programmatic SEO platform. The system automates the generation of niche product landing pages using AstroJS and integrates with the Zazzle API for on-demand product fulfillment.",
+    "1.2_scope": "The software will ingest geographical datasets (via OpenClaw), generate static/hybrid pages (via AstroJS), render dynamic product previews (via Zazzle RealView API), and redirect users to Zazzle for purchase (via Linkover API).",
+    "1.3_definitions": {
+      "Zazzle API": "The external interface for product creation and preview generation[cite: 1].",
+      "RealView": "Zazzle's technology for generating dynamic product images[cite: 175].",
+      "Linkover": "The mechanism to pass data to Zazzle and create a product for sale[cite: 13].",
+      "Templates Buffet": "The '1 to Many' API implementation mode allowing multiple products from one link[cite: 131]."
+    }
+  },
+  "2_overall_description": {
+    "2.1_product_perspective": "The system acts as a specialized traffic engine (SEO layer) that sits on top of Zazzle's infrastructure. It utilizes the 'Microstore' Astro theme as the UI foundation.",
+    "2.2_tech_stack_constraints": {
+      "framework": "AstroJS (v4+)",
+      "ui_theme": "Microstore (michael-andreuzza/microstore)",
+      "deployment_target": "Cloudflare Pages (Static Assets) & Cloudflare Workers (Dynamic Logic)",
+      "cli_tool": "Wrangler CLI",
+      "data_acquisition": "OpenClaw (Scraping/Data Mining)"
+    }
+  },
+  "3_system_features": {
+    "3.1_data_pipeline_module": {
+      "description": "Acquires and sanitizes niche variable data.",
+      "inputs": "OpenClaw scraping output (JSON/CSV).",
+      "requirements": [
+        "System must ingest datasets containing 'Location Name', 'Location Type' (Lake, Mountain), and 'MetaData'.",
+        "Data must be sanitized to ensure URL compatibility before processing.",
+        "System must validate that data does not contain known trademarked terms (e.g., Disney, Nike) to prevent Zazzle bans."
+      ]
+    },
+    "3.2_dynamic_page_generation": {
+      "description": "AstroJS Dynamic Routes ([...slug].astro) to render unique pages.",
+      "logic": "Map dataset entries to URL paths (e.g., /shop/lake-toba).",
+      "requirements": [
+        "Must generate unique H1 tags and Meta Descriptions based on the ingested variable.",
+        "Must utilize Astro Content Collections for efficient data handling at build time."
+      ]
+    },
+    "3.3_zazzle_realview_integration": {
+      "description": "Generates product preview images on the fly.",
+      "api_endpoint": "https://rlv.zazzle.com/svc/view [cite: 189]",
+      "parameters": {
+        "pid": "Product ID (Template ID) [cite: 191]",
+        "max_dim": "Set to 600 (Values >699 include Zazzle branded frame, which is undesirable for store aesthetics) [cite: 191]",
+        "t_{name}_url": "Dynamic Image URL (Must use 'url' suffix, not 'iid') [cite: 191]",
+        "t_{name}_txt": "The dynamic text variable (e.g., 'Lake Toba') [cite: 191]"
+      },
+      "constraints": "All parameter values must be URL Encoded[cite: 166]."
+    },
+    "3.4_zazzle_linkover_integration": {
+      "description": "Handles the 'Buy' button logic redirecting to Zazzle.",
+      "mode": "1 to Many (Templates Buffet) [cite: 131]",
+      "base_url": "https://www.zazzle.com/api/create/at-{member_id} [cite: 158]",
+      "required_parameters": [
+        "rf={associate_id} (For Affiliate Commission) [cite: 160]",
+        "ax=DesignBlast (Required for 1-to-Many) [cite: 160]",
+        "sr={store_id} [cite: 160]",
+        "cg={category_id} (Must be a specific category containing templates) [cite: 160]",
+        "t_{name}_iid={image_url} (Note: 'iid' suffix for Linkover, unlike RealView) [cite: 162]",
+        "ed=true (Allow user customization) [cite: 162]",
+        "continueUrl={return_url} (The Boomerang Strategy) [cite: 162]"
+      ]
+    }
+  },
+  "4_interface_requirements": {
+    "4.1_user_interface": {
+      "theme_adaptation": "Microstore Theme",
+      "modifications": [
+        "Remove internal 'Cart' and 'Checkout' logic.",
+        "Replace 'Add to Cart' button with external link button labeled 'Customize on Zazzle'.",
+        "Implement 'Grid View' populated by the Templates Buffet logic."
+      ]
+    },
+    "4.2_software_interfaces": {
+      "cloudflare_workers": {
+        "function": "Handle complex redirects or dynamic parameter injection if client-side JS is disabled.",
+        "config": "wrangler.toml"
+      },
+      "image_hosting": {
+        "requirement": "Images passed to API must be hosted on a domain declared in Zazzle Associate Settings[cite: 203].",
+        "implementation": "Serve static assets via Cloudflare Pages or R2 bucket."
+      }
+    }
+  },
+  "5_non_functional_requirements": {
+    "5.1_performance": {
+      "metric": "Lighthouse Performance Score > 90.",
+      "strategy": "Use Astro's static generation (SSG) for 99% of content. Lazy load RealView images."
+    },
+    "5.2_seo": {
+      "requirement": "Programmatic generation of sitemap.xml for all 5,000+ pages.",
+      "implementation": "@astrojs/sitemap integration."
+    },
+    "5.3_reliability": {
+      "constraint": "Templates must be set to 'Public' and 'G-Rated' to function in the Templates Buffet API[cite: 212]."
+    }
+  },
+  "6_deployment_pipeline": {
+    "tools": "Wrangler CLI",
+    "steps": [
+      "1. OpenClaw scrapes data -> saves to src/data/locations.json.",
+      "2. Astro builds static pages based on locations.json.",
+      "3. Wrangler uploads assets to Cloudflare Pages.",
+      "4. Wrangler deploys Worker scripts for edge logic."
+    ]
+  },
+  "7_critical_api_constraints_reference": {
+    "source_document": "Zazzle Create-A-Product API Guide v3",
+    "rules": [
+      {
+        "id": "RULE-01",
+        "description": "Image URLs and Text must be URL Encoded.",
+        "reference": "Page 9 [cite: 166]"
+      },
+      {
+        "id": "RULE-02",
+        "description": "RealView uses 't_image1_url' while Linkover uses 't_image1_iid'. Mixing these causes errors.",
+        "reference": "Page 11 [cite: 203]"
+      },
+      {
+        "id": "RULE-03",
+        "description": "Templates cannot be edited after posting. New Product IDs must be generated for design changes.",
+        "reference": "Page 11 [cite: 205]"
+      },
+      {
+        "id": "RULE-04",
+        "description": "Continue URL parameter is case sensitive ('continueUrl').",
+        "reference": "Page 11 [cite: 203]"
+      }
+    ]
+  }
+}

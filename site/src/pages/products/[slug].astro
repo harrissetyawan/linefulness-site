@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductDetail from "../../components/products/ProductDetail.astro";
+import locationsData from "../../data/locations.json";
+import { 
+  generateLinkoverUrl, 
+  generateProductLinkoverUrl,
+  generateRealViewUrl,
+  generateMetaDescription,
+  generatePageTitle,
+  getTemplates,
+  type Location
+} from "../../lib/zazzle";
+
+// Generate static paths for all locations
+export function getStaticPaths() {
+  const locations: Location[] = locationsData.locations;
+  
+  return locations.map((location) => ({
+    params: { slug: location.slug },
+    props: { location },
+  }));
+}
+
+const { location } = Astro.props;
+const templates = getTemplates();
+
+// Get the template type from query parameter
+const templateType = Astro.url.searchParams.get('template');
+
+// Generate Zazzle Linkover URL (1-to-Many Templates Buffet)
+const returnUrl = `${Astro.site?.toString() || 'https://linefulness.com'}/products/${location.slug}`;
+const zazzleUrl = generateLinkoverUrl(location, returnUrl);
+
+// Generate RealView preview URLs for each template
+const templatePreviews = templates.map(template => ({
+  ...template,
+  previewUrl: generateRealViewUrl(template, location),
+  productUrl: generateProductLinkoverUrl(template, location, returnUrl)
+}));
+
+// SEO metadata
+const title = generatePageTitle(location);
+const description = generateMetaDescription(location);
+---
+
+<BaseLayout title={title} description={description}>
+  <ProductDetail
+    location={location}
+    zazzleUrl={zazzleUrl}
+    templatePreviews={templatePreviews}
+    primaryTemplateType={templateType}
+  />
+</BaseLayout>

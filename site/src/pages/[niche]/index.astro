@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NicheHero from "../../components/niche/NicheHero.astro";
+import NicheProducts from "../../components/niche/NicheProducts.astro";
+import nichesData from "../../data/niches.json";
+
+export function getStaticPaths() {
+  return nichesData.niches.map(niche => ({
+    params: { niche: niche.slug },
+    props: { niche },
+  }));
+}
+
+const { niche } = Astro.props;
+
+const title = niche.seo.title;
+const description = niche.seo.description;
+---
+
+<BaseLayout title={title} description={description} canonical={`/${niche.slug}`}>
+  <NicheHero niche={niche} />
+  <div id="products">
+    <NicheProducts niche={niche} />
+  </div>
+</BaseLayout>

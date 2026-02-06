@@ -1,0 +1,43 @@
+{
+  "logo": {
+    "text": "Linefulness",
+    "href": "/"
+  },
+  "mainMenu": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+    "label": "Collections",
+      "href": "/#niches",
+      "children": [
+        {
+          "label": "Lakes",
+          "href": "/lakes",
+          "description": "Custom lake merchandise"
+        },
+        {
+          "label": "Beaches",
+          "href": "/beaches",
+          "description": "Beach-themed products"
+        },
+        {
+          "label": "Cities",
+          "href": "/cities",
+          "description": "City merchandise"
+        }
+      ]
+    }
+  ],
+  "ctaButton": {
+    "label": "Explore",
+    "href": "/#niches"
+  },
+  "settings": {
+    "sticky": true,
+    "showLogo": true,
+    "showCta": true,
+    "transparentOnTop": false
+  }
+}

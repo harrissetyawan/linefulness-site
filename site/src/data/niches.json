@@ -1,0 +1,283 @@
+{
+  "default": "lakes",
+  "niches": [
+    {
+      "id": "lakes",
+      "name": "Lakes",
+      "slug": "lakes",
+      "icon": "🏕️",
+      "theme": {
+        "primaryColor": "orange",
+        "heroImage": ""
+      },
+      "seo": {
+        "title": "Custom Lake Merchandise & Gifts",
+        "description": "Personalized mugs, sweatshirts, and hats featuring your favorite lakes."
+      },
+      "hero": {
+        "title": "Custom Merchandise for Lake Lovers",
+        "subtitle": "Discover personalized products featuring your favorite lakes. Perfect gifts for campers, hikers, and nature enthusiasts.",
+        "ctaPrimary": "Browse Lake Collections",
+        "ctaSecondary": "View All Lakes"
+      },
+      "collections": {
+        "title": "Collection",
+        "subtitle": "Custom {type}s featuring your favorite lakes",
+        "sectionTitle": "All Lakes",
+        "sectionSubtitle": "Browse all {count} lakes and find your favorite"
+      },
+      "templates": [
+        {
+          "type": "Mug",
+          "product_id_pd": "256657138688428297",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 25,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
+        },
+        {
+          "type": "Sweatshirt",
+          "product_id_pd": "256687649014042354",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 30,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
+        },
+        {
+          "type": "Hat",
+          "product_id_pd": "256009887799526931",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 20,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
+        }
+      ],
+      "locations": [
+        {"name": "Lake Tahoe", "slug": "lake-tahoe"},
+        {"name": "Crater Lake", "slug": "crater-lake"},
+        {"name": "Lake Powell", "slug": "lake-powell"},
+        {"name": "Lake McDonald", "slug": "lake-mcdonald"},
+        {"name": "Lake Champlain", "slug": "lake-champlain"},
+        {"name": "Lake George", "slug": "lake-george"},
+        {"name": "Lake Superior", "slug": "lake-superior"},
+        {"name": "Lake Michigan", "slug": "lake-michigan"}
+      ]
+    },
+    {
+      "id": "beaches",
+      "name": "Beaches",
+      "slug": "beaches",
+      "icon": "🏖️",
+      "theme": {
+        "primaryColor": "blue",
+        "heroImage": ""
+      },
+      "seo": {
+        "title": "Custom Beach Merchandise & Gifts",
+        "description": "Personalized mugs, sweatshirts, and hats featuring your favorite beaches."
+      },
+      "hero": {
+        "title": "Custom Merchandise for Beach Lovers",
+        "subtitle": "Discover personalized products featuring your favorite beaches. Perfect gifts for surfers, sun-seekers, and coastal enthusiasts.",
+        "ctaPrimary": "Browse Beach Collections",
+        "ctaSecondary": "View All Beaches"
+      },
+      "collections": {
+        "title": "Collection",
+        "subtitle": "Custom {type}s featuring your favorite beaches",
+        "sectionTitle": "All Beaches",
+        "sectionSubtitle": "Browse all {count} beaches and find your favorite"
+      },
+      "templates": [
+        {
+          "type": "Mug",
+          "product_id_pd": "256657138688428297",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 25,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
+        },
+        {
+          "type": "T-Shirt",
+          "product_id_pd": "256687649014042354",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 30,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
+        }
+      ],
+      "locations": [
+        {"name": "Miami Beach", "slug": "miami-beach"},
+        {"name": "Malibu Beach", "slug": "malibu-beach"},
+        {"name": "Waikiki Beach", "slug": "waikiki-beach"},
+        {"name": "Venice Beach", "slug": "venice-beach"},
+        {"name": "Santa Monica", "slug": "santa-monica"}
+      ]
+    },
+    {
+      "id": "cities",
+      "name": "Cities",
+      "slug": "cities",
+      "icon": "🏙️",
+      "theme": {
+        "primaryColor": "purple",
+        "heroImage": ""
+      },
+      "seo": {
+        "title": "Custom City Merchandise & Gifts",
+        "description": "Personalized mugs, sweatshirts, and hats featuring your favorite cities."
+      },
+      "hero": {
+        "title": "Custom Merchandise for City Lovers",
+        "subtitle": "Discover personalized products featuring your favorite cities. Perfect gifts for travelers, urban explorers, and locals.",
+        "ctaPrimary": "Browse City Collections",
+        "ctaSecondary": "View All Cities"
+      },
+      "collections": {
+        "title": "Collection",
+        "subtitle": "Custom {type}s featuring your favorite cities",
+        "sectionTitle": "All Cities",
+        "sectionSubtitle": "Browse all {count} cities and find your favorite"
+      },
+      "templates": [
+        {
+          "type": "Mug",
+          "product_id_pd": "256657138688428297",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 25,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
+        },
+        {
+          "type": "Hoodie",
+          "product_id_pd": "256687649014042354",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 30,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
+        }
+      ],
+      "locations": [
+        {"name": "New York", "slug": "new-york"},
+        {"name": "Los Angeles", "slug": "los-angeles"},
+        {"name": "Chicago", "slug": "chicago"},
+        {"name": "San Francisco", "slug": "san-francisco"},
+        {"name": "Austin", "slug": "austin"},
+        {"name": "Seattle", "slug": "seattle"}
+      ]
+    },
+    {
+      "id": "gifts",
+      "name": "Gifts",
+      "slug": "gifts",
+      "icon": "🎁",
+      "theme": {
+        "primaryColor": "green",
+        "heroImage": ""
+      },
+      "seo": {
+        "title": "Custom Gift Merchandise & Gifts",
+        "description": "Personalized mugs, sweatshirts, and hats featuring your favorite gifts."
+      },
+      "hero": {
+        "title": "Custom Merchandise for Gift Lovers",
+        "subtitle": "Discover personalized products featuring your favorite gifts. Perfect gifts for any occasion."
+      },
+      "collections": {
+        "title": "Collection",
+        "subtitle": "Custom {type}s featuring your favorite gifts",
+        "sectionTitle": "All Gifts",
+        "sectionSubtitle": "Browse all {count} gifts and find your favorite"
+      },
+      "templates": [
+        {
+          "type": "Shirt for Women",
+          "product_id_pd": "256308685276558046",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 25,
+            "image_aspect_ratio": "1:1"
+          }
+        },
+        {
+          "type": "Bucket Hat",
+          "product_id_pd": "256879401522860408",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 25,
+            "image_aspect_ratio": "1:1"
+        }
+      }
+      ],
+      "locations": [
+        {"name": "good doctor", "slug": "birthday"},
+        {"name": "gooddentist", "slug": "christmas"},
+        {"name": "good nurse", "slug": "valentine's-day"},
+        {"name": "good lawyer", "slug": "anniversary"},
+        {"name": "good doctor", "slug": "graduation"}
+      ]
+    }
+  ]
+}

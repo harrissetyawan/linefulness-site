@@ -1,0 +1,25 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Navigation from "@/components/global/Navigation.astro";
+import Footer from "@/components/global/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { title, description, image, canonical } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} canonical={canonical} />
+  </head>
+  <body class="bg-white flex flex-col min-h-screen">
+    <Navigation />
+    <main class="grow max-w-6xl mx-auto px-8 lg:px-12 w-full"><slot /></main>
+    <Footer />
+  </body>
+</html>
