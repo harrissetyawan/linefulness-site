@@ -74,6 +74,22 @@
             "max_dim": 600,
             "text_color": "000000"
           }
+        },
+        {
+          "type": "Men Shirt",
+          "product_id_pd": "256352518857340066",
+          "parameter_mapping": {
+            "text_variable": "t_text1_txt",
+            "image_variable": "t_image1_iid"
+          },
+          "constraints": {
+            "max_text_length": 20,
+            "image_aspect_ratio": "1:1"
+          },
+          "realview_params": {
+            "max_dim": 600,
+            "text_color": "000000"
+          }
         }
       ],
       "locations": [
@@ -275,7 +291,7 @@
         {"name": "good doctor", "slug": "birthday"},
         {"name": "gooddentist", "slug": "christmas"},
         {"name": "good nurse", "slug": "valentine's-day"},
-        {"name": "good lawyer", "slug": "anniversary"},
+        {"name": "lawyer", "slug": "anniversary"},
         {"name": "good doctor", "slug": "graduation"}
       ]
     }

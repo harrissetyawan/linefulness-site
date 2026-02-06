@@ -32,6 +32,9 @@ export default {
     modifiedResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
     modifiedResponse.headers.set('Permissions-Policy', 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()');
     
+    // Content Signals - allow search indexing, disallow AI training
+    modifiedResponse.headers.set('Content-Signal', 'search=yes,ai-train=no');
+    
     // Add cache headers for static assets
     if (url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg|css|js)$/)) {
       modifiedResponse.headers.set('Cache-Control', 'public, max-age=31536000, immutable');

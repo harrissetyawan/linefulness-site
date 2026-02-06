@@ -65,9 +65,12 @@ const fullCanonical = canonical.startsWith('http') ? canonical : `${siteUrl}${ca
 <!-- For IE -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<!-- Preconnect to external domains -->
-<link rel="preconnect" href="https://rsms.me/" />
+<!-- DNS prefetch and preconnect for external domains -->
+<link rel="dns-prefetch" href="https://rsms.me/" />
+<link rel="preconnect" href="https://rsms.me/" crossorigin />
+<link rel="dns-prefetch" href="https://rlv.zazzle.com/" />
 <link rel="preconnect" href="https://rlv.zazzle.com/" crossorigin />
 
-<!-- Inter Font -->
-<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+<!-- Inter Font - async loading to prevent render blocking -->
+<link rel="preload" href="https://rsms.me/inter/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://rsms.me/inter/inter.css" /></noscript>

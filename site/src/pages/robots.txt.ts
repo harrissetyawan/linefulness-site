@@ -5,7 +5,7 @@ export const GET: APIRoute = () => {
   const siteUrl = 'https://linefulness.com';
   
   // Generate niche-specific allow rules
-  const nicheRules = nichesData.niches.map(niche => 
+  const nicheRules = (nichesData as any).niches.map((niche: any) => 
     `Allow: /${niche.slug}/`
   ).join('\n');
 

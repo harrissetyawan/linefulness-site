@@ -38,7 +38,7 @@ const currentPath = Astro.url.pathname;
                 "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center gap-1",
                 currentPath === item.href 
                   ? "text-orange-600 bg-orange-50" 
-                  : "text-base-600 hover:text-base-900 hover:bg-base-100"
+                  : "text-base-700 hover:text-base-900 hover:bg-base-100"
               ]}
             >
               {item.label}
@@ -65,7 +65,7 @@ const currentPath = Astro.url.pathname;
                     >
                       <span class="font-medium block">{child.label}</span>
                       {child.description && (
-                        <span class="text-xs text-base-400 block mt-0.5">{child.description}</span>
+                        <span class="text-xs text-base-600 block mt-0.5">{child.description}</span>
                       )}
                     </a>
                   ))}
@@ -81,7 +81,7 @@ const currentPath = Astro.url.pathname;
         <div class="hidden md:block">
           <a
             href={ctaButton.href}
-            class="px-5 font-medium h-9 text-sm bg-orange-500 text-white rounded-full flex items-center justify-center hover:bg-orange-600 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-orange-500/20"
+            class="px-5 font-medium h-9 text-sm bg-orange-600 text-white rounded-full flex items-center justify-center hover:bg-orange-700 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-orange-600/20"
           >
             {ctaButton.label}
           </a>
@@ -91,7 +91,7 @@ const currentPath = Astro.url.pathname;
       {/* Mobile Menu Button */}
       <button
         type="button"
-        class="md:hidden p-2 rounded-lg text-base-600 hover:text-base-900 hover:bg-base-100 transition-colors duration-200"
+        class="md:hidden p-2 rounded-lg text-base-700 hover:text-base-900 hover:bg-base-100 transition-colors duration-200"
         aria-label="Toggle menu"
         data-mobile-toggle
       >
@@ -145,7 +145,7 @@ const currentPath = Astro.url.pathname;
                   >
                     <span class="font-medium">{child.label}</span>
                     {child.description && (
-                      <span class="text-xs text-base-400 block mt-0.5">{child.description}</span>
+                      <span class="text-xs text-base-600 block mt-0.5">{child.description}</span>
                     )}
                   </a>
                 ))}
